@@ -19,6 +19,7 @@ type message = {
 type Props = {
   name: string;
   room: string;
+  showSidebar?: boolean;
 };
 
 /*
@@ -51,7 +52,6 @@ const Chat = (props: Props) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
   };
-
   useEffect(() => {
     if (socket.disconnected) {
       socket.connect();
@@ -93,7 +93,7 @@ const Chat = (props: Props) => {
           message={message}
         />
       </div>
-      <ChatSidebar users={users} />
+      <ChatSidebar users={users} show={props.showSidebar} />
     </Container>
   );
 };

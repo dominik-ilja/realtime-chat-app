@@ -6,6 +6,7 @@ import Header from "../../components/Pages/Rooms/Header/Header";
 const Room = () => {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
+  const [showChatSidebar, setShowChatSidebar] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -25,8 +26,15 @@ const Room = () => {
 
   return (
     <div className="flex flex-col max-h-screen">
-      {room && <Header room={room} />}
-      {name && room && <Chat name={name} room={room} />}
+      {room && (
+        <Header
+          room={room}
+          onToggleClick={() => setShowChatSidebar(!showChatSidebar)}
+        />
+      )}
+      {name && room && (
+        <Chat name={name} room={room} showSidebar={showChatSidebar} />
+      )}
     </div>
   );
 };
