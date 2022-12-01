@@ -9,12 +9,34 @@ const io = new Server(httpServer, { cors: { origin: "*" } });
 let users = [];
 let messages = [];
 
+function addMessage(name, message) {
+  messages.push({
+    name,
+    message,
+    timestamp: new Date().toISOString(),
+  });
+  io.emit("server message", messages);
+}
+function addUser(name, room, id) {
+  users.push({ name, room, id });
+  io.emit("join server", users);
+}
+function removeUser(id) {
+  users = users.filter((user) => {
+    if (user.id === id) {
+      addMessage("Admin", `${user.name} has left!`);
+    }
+    return user.id !== id;
+  });
+
+  io.emit("user disconnect server", users);
+}
+
 io.on("connection", (socket) => {
   // console.log("connection: ", socket.id);
 
   socket.on("client message", (name, message, callback) => {
-    messages.push({ name, message });
-    io.emit("server message", messages);
+    addMessage(name, message);
     callback();
   });
   socket.on("join", (name, room, callback) => {
@@ -23,26 +45,14 @@ io.on("connection", (socket) => {
     if (users.find((user) => user.name === name)) {
       callback("Name already exists");
     } else {
-      users.push({ name, room, id: socket.id });
-      messages.push({ name: "Admin", message: `${name} has joined!` });
-      io.emit("join server", users);
-      io.emit("server message", messages);
+      addUser(name, room, socket.id);
+      addMessage("Admin", `${name} has joined!`);
       callback(null);
     }
   });
   socket.on("disconnect", (reason) => {
     // console.log("user disconnected: ", reason, socket.id);
-
-    users = users.filter((user) => {
-      if (user.id === socket.id) {
-        messages.push({ name: "Admin", message: `${user.name} has left!` });
-      }
-      return user.id !== socket.id;
-    });
-
-    console.log(users);
-    io.emit("user disconnect server", users);
-    io.emit("server message", messages);
+    removeUser(socket.id);
   });
 });
 

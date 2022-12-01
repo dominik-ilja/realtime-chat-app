@@ -15,6 +15,7 @@ type user = {
 type message = {
   name: string;
   message: string;
+  timestamp: string;
 };
 type Props = {
   name: string;
