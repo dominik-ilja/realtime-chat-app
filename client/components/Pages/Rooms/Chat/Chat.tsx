@@ -85,8 +85,8 @@ const Chat = (props: Props) => {
   }, []);
 
   return (
-    <div className="relative z-10 flex self-stretch overflow-hidden bg-bg">
-      <div className="relative flex flex-col justify-between flex-grow w-full px-3 pb-3 md:pb-4 md:pl-8">
+    <div className="relative z-10 flex overflow-hidden bg-bg">
+      <div className="relative flex flex-col justify-between w-full min-w-0 px-3 pb-3 md:pb-4 md:pl-8">
         <ChatMessages messages={messages} />
         <ChatInput
           onSubmit={handleFormSubmit}
