@@ -1,5 +1,6 @@
+import Link from "next/link";
 import { MouseEventHandler } from "react";
-import Container from "../../../../components/Container/Container";
+import { FaUserFriends, FaHome } from "react-icons/fa";
 
 type Props = {
   room?: string;
@@ -21,11 +22,18 @@ const Header = (props: Props) => {
         </div>
         {/* TODO: Replace div with button that has icon inside it */}
         <div className="flex gap-x-2 md:gap-x-4">
-          <div className="w-6 h-6 rounded-full cursor-pointer bg-primary" />
-          <div
+          <Link
+            href="/"
+            className="flex items-center justify-center w-8 h-8 transition-opacity rounded-full bg-primary hover:opacity-80 focus:opacity-80"
+          >
+            <FaHome fill="white" size={20} />
+          </Link>
+          <button
+            className="flex items-center justify-center w-8 h-8 transition-opacity rounded-full bg-primary hover:opacity-80 focus:opacity-80"
             onClick={props.onToggleClick}
-            className="w-6 h-6 rounded-full cursor-pointer xl:mr-8 bg-primary"
-          />
+          >
+            <FaUserFriends fill="white" size={20} />
+          </button>
         </div>
       </div>
     </header>
