@@ -25,7 +25,7 @@ const Room = () => {
   }, []);
 
   return (
-    <div className="flex flex-col max-h-screen">
+    <div className="grid h-screen grid-rows-[auto,_1fr]">
       {room && (
         <Header
           room={room}

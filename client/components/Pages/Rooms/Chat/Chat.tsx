@@ -85,17 +85,18 @@ const Chat = (props: Props) => {
   }, []);
 
   return (
-    <Container className="flex pb-4 absolute top-[74px] left-0 right-0 bottom-0 z-10 overflow-hidden">
-      <div className="flex flex-col justify-between w-full">
+    <div className="relative z-10 flex self-stretch overflow-hidden bg-bg">
+      <div className="relative flex flex-col justify-between flex-grow w-full px-3 pb-3 md:pb-4 md:pl-8">
         <ChatMessages messages={messages} />
         <ChatInput
           onSubmit={handleFormSubmit}
           onChange={handleChange}
           message={message}
+          room={props.room}
         />
       </div>
       <ChatSidebar users={users} show={props.showSidebar} />
-    </Container>
+    </div>
   );
 };
 

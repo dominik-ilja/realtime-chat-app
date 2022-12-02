@@ -2,15 +2,82 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  color: black;
+:root {
+  /* Media Query Sizes */
+  --query-xs: 380px;
+  --query-sm: 500px;
+  --query-md: 768px;
+  --query-lg: 1080px;
+  --query-xl: 1560px;
+
+  /* Colors */
+
+  /* White */
+  --color-white: #ffffff;
+  --color-white-100: #f8fbff;
+  --color-white-200: #f3f6fc;
+  --color-white-300: #eef1f7;
+  --color-white-400: #e9ecf2;
+  --color-white-500: #e4e7ed;
+  --color-white-600: #dfe2e8;
+  --color-white-700: #dadde3;
+  --color-white-800: #d5d8de;
+  --color-white-900: #d0d3d9;
+
+  /* Gray Light */
+  --color-gray-light-100: #cbced4;
+  --color-gray-light-200: #c6c9cf;
+  --color-gray-light-300: #c1c4ca;
+  --color-gray-light-400: #b7bac0;
+  --color-gray-light-500: #b2b5bb;
+  --color-gray-light-600: #a8abb1;
+  --color-gray-light-700: #a3a6ac;
+  --color-gray-light-800: #999ca2;
+  --color-gray-light-900: #94979d;
+
+  /* Gray Dark */
+  --color-gray-dark-100: #86898f;
+  --color-gray-dark-200: #81848a;
+  --color-gray-dark-300: #777a80;
+  --color-gray-dark-400: #72757b;
+  --color-gray-dark-500: #6d7076; /*  */
+  --color-gray-dark-600: #63666c;
+  --color-gray-dark-700: #5e6167;
+  --color-gray-dark-800: #54575d;
+  --color-gray-dark-900: #4f5258;
+
+  /* Black */
+  --color-black-100: #3b3e44;
+  --color-black-200: #36393f;
+  --color-black-300: #2c2f35;
+  --color-black-400: #272a30;
+  --color-black-500: #22252b;
+  --color-black-600: #1d2026;
+  --color-black-700: #17191e;
+  --color-black-800: #0d0f14;
+  --color-black-900: #03050a;
+  --color-black: #000000;
+
+  /* Color Palette Light */
+  --color-primary: #ebcb8b;
+  --color-bg: #fff;
+  --color-sidebar: #fff5e1;
+  --color-text-dark: var(--color-black-800);
+  --color-text-dark-100: var(--color-gray-dark-500);
+  --color-text-dark-: var(--color-black-800);
+  --color-text-dark: var(--color-black-800);
+  --color-text-light: var(--color-black-800);
 }
 
 @media (prefers-color-scheme: dark) {
+  :root {
+    /* Color Palette Dark */
+    --color-primary: #346ad4;
+    --color-bg: #22252b;
+    --color-sidebar: #17191e;
+    --color-text: #fff;
+  }
   html {
     color-scheme: dark;
-  }
-  body {
-    color: white;
   }
 }
