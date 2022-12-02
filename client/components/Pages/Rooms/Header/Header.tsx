@@ -15,12 +15,10 @@ const Header = (props: Props) => {
           <span className="text-sm sm:inline md:text-base">
             Welcome to room:
           </span>{" "}
-          {/* <span className="text-sm sm:hidden">room: </span> */}
           <span className="text-xl text-primary sm:text-2xl md:text-4xl">
             {props.room}
           </span>
         </div>
-        {/* TODO: Replace div with button that has icon inside it */}
         <div className="flex gap-x-2 md:gap-x-4">
           <Link
             href="/"
