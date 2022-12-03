@@ -2,9 +2,14 @@
   Various events used by the socket server
 */
 
-exports.CLIENT_MESSAGE = "client message";
-exports.SERVER_MESSAGE_PUBLIC = "public server message";
-exports.SERVER_MESSAGE_PRIVATE = "private server message";
+/* NATIVE EVENTS */
 exports.CONNECT = "connect";
 exports.DISCONNECT = "disconnect";
-exports.JOIN = "join";
+exports.DISCONNECTING = "disconnecting";
+
+/* CUSTOM EVENTS */
+exports.CLIENT_USER_JOIN = "client user joined";
+exports.SERVER_USERS_UPDATED = "server users updated";
+exports.CLIENT_CHAT_MESSAGE = "client chat message sent";
+exports.SERVER_CHAT_UPDATED = "server chat messages updated";
+exports.SERVER_MESSAGE_PRIVATE = "private server message";

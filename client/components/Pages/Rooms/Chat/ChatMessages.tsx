@@ -1,11 +1,5 @@
 import { useEffect, useRef } from "react";
 
-type message = {
-  name: string;
-  message: string;
-  timestamp: string;
-};
-
 type Props = {
   messages: message[];
 };

@@ -37,7 +37,7 @@ const Chat = (props: Props) => {
 
     if (trimmedMsg !== "") {
       socket.emit(
-        SOCKET_EVENTS.CLIENT_MESSAGE,
+        SOCKET_EVENTS.CLIENT_CHAT_MESSAGE,
         props.name,
         props.room,
         trimmedMsg,
@@ -53,30 +53,32 @@ const Chat = (props: Props) => {
       socket.connect();
     }
 
-    socket.on(SOCKET_EVENTS.SERVER_MESSAGE, (msg) => {
+    socket.on(SOCKET_EVENTS.SERVER_CHAT_UPDATED, (msg) => {
       setMessages(msg);
     });
-    socket.on("join server", (users) => {
+    socket.on(SOCKET_EVENTS.SERVER_USERS_UPDATED, (users) => {
       setUsers(users);
     });
-    socket.on("user disconnect server", (users) => {
-      setUsers(users);
-    });
-    socket.emit("join", props.name, props.room, (error: string | null) => {
-      if (error !== null) {
-        console.log(error);
+    socket.emit(
+      SOCKET_EVENTS.CLIENT_USER_JOIN,
+      props.name,
+      props.room,
+      (error: string | null) => {
+        if (error !== null) {
+          console.log(error);
 
-        alert(error);
-        router.push("/");
+          alert(error);
+          router.push("/");
+        }
       }
-    });
+    );
 
     const routeChangeHandler = () => socket.disconnect();
     router.events.on("routeChangeStart", routeChangeHandler);
 
     return () => {
-      socket.off(SOCKET_EVENTS.SERVER_MESSAGE);
-      socket.off("join server");
+      socket.off(SOCKET_EVENTS.SERVER_CHAT_UPDATED);
+      socket.off(SOCKET_EVENTS.SERVER_USERS_UPDATED);
       router.events.off("routeChangeStart", routeChangeHandler);
     };
   }, []);

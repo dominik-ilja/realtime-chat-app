@@ -34,19 +34,22 @@ function addMessage(name, room, message) {
     timestamp: new Date().toISOString(),
   });
 
-  io.to(room).emit("server message", chatroom.messages);
+  io.to(room).emit(SOCKET_EVENTS.SERVER_CHAT_UPDATED, chatroom.messages);
 }
 
-io.on("connection", (socket) => {
+io.on(SOCKET_EVENTS.CONNECT, (socket) => {
   console.log("connection: ", socket.id);
 
-  socket.on("client message", (name, room, message, callback) => {
-    if (!name || !room || !message || !callback) return;
+  socket.on(
+    SOCKET_EVENTS.CLIENT_CHAT_MESSAGE,
+    (name, room, message, callback) => {
+      if (!name || !room || !message || !callback) return;
 
-    addMessage(name, room, message);
-    callback();
-  });
-  socket.on("join", (name, room, callback) => {
+      addMessage(name, room, message);
+      callback();
+    }
+  );
+  socket.on(SOCKET_EVENTS.CLIENT_USER_JOIN, (name, room, callback) => {
     console.log("join", socket.id);
 
     createRoomIfItDoesNotExist(room);
@@ -57,14 +60,14 @@ io.on("connection", (socket) => {
       const chatroom = rooms[room];
       chatroom.users.push({ name, room, id: socket.id });
       socket.join(room);
-      io.to(room).emit("join server", chatroom.users);
+      io.to(room).emit(SOCKET_EVENTS.SERVER_USERS_UPDATED, chatroom.users);
       addMessage("Admin", room, `${name} has joined!`);
       callback(null);
     }
 
     console.dir(rooms, { depth: null });
   });
-  socket.on("disconnecting", (reason) => {
+  socket.on(SOCKET_EVENTS.DISCONNECTING, (reason) => {
     console.log("disconnecting: ", reason);
     // figure out the rooms that the socket is in and remove it
     let i = 0;
@@ -83,8 +86,7 @@ io.on("connection", (socket) => {
 
         return user.id !== socket.id;
       });
-      io.to(room).emit("user disconnect server", chatroom.users);
-      console.log(chatroom);
+      io.to(room).emit(SOCKET_EVENTS.SERVER_USERS_UPDATED, chatroom.users);
     }
   });
 });
