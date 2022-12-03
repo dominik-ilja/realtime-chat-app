@@ -45,8 +45,12 @@ const Chat = (props: Props) => {
     const trimmedMsg = message.trim();
 
     if (trimmedMsg !== "") {
-      socket.emit(SOCKET_EVENTS.CLIENT_MESSAGE, props.name, trimmedMsg, () =>
-        setMessage("")
+      socket.emit(
+        SOCKET_EVENTS.CLIENT_MESSAGE,
+        props.name,
+        props.room,
+        trimmedMsg,
+        () => setMessage("")
       );
     }
   };
@@ -69,6 +73,8 @@ const Chat = (props: Props) => {
     });
     socket.emit("join", props.name, props.room, (error: string | null) => {
       if (error !== null) {
+        console.log(error);
+
         alert(error);
         router.push("/");
       }
