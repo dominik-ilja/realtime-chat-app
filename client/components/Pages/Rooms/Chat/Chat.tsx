@@ -7,15 +7,6 @@ import ChatSidebar from "./ChatSidebar";
 import ChatMessages from "./ChatMessages";
 import ChatInput from "./ChatInput";
 
-type user = {
-  name: string | null;
-  room: string | null;
-};
-type message = {
-  name: string;
-  message: string;
-  timestamp: string;
-};
 type Props = {
   name: string;
   room: string;

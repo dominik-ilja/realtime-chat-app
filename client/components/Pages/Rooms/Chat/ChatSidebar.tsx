@@ -1,6 +1,3 @@
-type user = {
-  name: string;
-};
 type Props = {
   users: user[];
   show?: boolean;
