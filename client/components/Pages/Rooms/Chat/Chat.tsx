@@ -1,10 +1,7 @@
 import { useRouter } from "next/router";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import * as dotenv from "dotenv";
-dotenv.config();
 
-import Container from "../../../../components/Container/Container";
 import * as SOCKET_EVENTS from "../../../../shared/socketEvents";
 import ChatSidebar from "./ChatSidebar";
 import ChatMessages from "./ChatMessages";
@@ -33,7 +30,8 @@ type Props = {
   We need to have the socket be initialized outside of the component to prevent
   multiple instances from being generate on re-render.
 */
-const serverEndpoint = process.env.ENDPOINT || "Localhost:5000";
+const serverEndpoint =
+  process.env.ENDPOINT || "https://realtime-chat-app-server.onrender.com/";
 let socket = io(serverEndpoint);
 
 const Chat = (props: Props) => {
