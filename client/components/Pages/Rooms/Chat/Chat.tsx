@@ -31,7 +31,7 @@ type Props = {
   We need to have the socket be initialized outside of the component to prevent
   multiple instances from being generate on re-render.
 */
-const serverEndpoint = "http://192.168.1.135:5000";
+const serverEndpoint = process.env.ENDPOINT || "Localhost:5000";
 let socket = io(serverEndpoint);
 
 const Chat = (props: Props) => {
