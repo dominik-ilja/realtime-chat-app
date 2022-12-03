@@ -12,8 +12,6 @@ const rooms = {
   //   messages: []
   // }
 };
-let users = [];
-let messages = [];
 
 function roomAlreadyHasName(name, room) {
   return rooms[room].users.find((user) => user.name === name);
@@ -37,23 +35,6 @@ function addMessage(name, room, message) {
   });
 
   io.to(room).emit("server message", chatroom.messages);
-}
-function addUser(name, room, id) {
-  users.push({ name, room, id });
-  io.emit("join server", users);
-}
-function removeUser(room, id) {
-  createRoomIfItDoesNotExist(room);
-
-  const chatroom = rooms[room];
-  chatroom.users = chatroom.users.filter((user) => {
-    if (user.id === id) {
-      addMessage("Admin", room, `${user.name} has left!`);
-    }
-    return user.id !== id;
-  });
-
-  io.to(room).emit("user disconnect server", users);
 }
 
 io.on("connection", (socket) => {
@@ -84,6 +65,7 @@ io.on("connection", (socket) => {
     console.dir(rooms, { depth: null });
   });
   socket.on("disconnecting", (reason) => {
+    console.log("disconnecting: ", reason);
     // figure out the rooms that the socket is in and remove it
     let i = 0;
     for (const room of socket.rooms.values()) {
@@ -104,10 +86,6 @@ io.on("connection", (socket) => {
       io.to(room).emit("user disconnect server", chatroom.users);
       console.log(chatroom);
     }
-  });
-  socket.on("disconnect", (reason) => {
-    // console.log("user disconnected: ", reason, socket.id);
-    removeUser(socket.id);
   });
 });
 
