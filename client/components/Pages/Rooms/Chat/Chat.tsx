@@ -1,6 +1,8 @@
 import { useRouter } from "next/router";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { io } from "socket.io-client";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 import Container from "../../../../components/Container/Container";
 import * as SOCKET_EVENTS from "../../../../shared/socketEvents";
